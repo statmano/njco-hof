@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
+    <!-- import the webpage's javascript file -->
+    <script src="/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/6dof-object-control@v0.5-alpha/src/thumbstick-object-control.min.js"></script>
+    <script src="https://rawgit.com/Ctrl-Alt-Zen/aframe-mobile-controls/master/components/twoway-motion/twoway-motion.js"></script>
+
+  </head>
+
+  <body>
+    <a-scene log="Hello Scene!">
+      <!-- ASM Secton -->
+      <a-assets>
+        <img
+          id="light-brick"
+          src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Flight-brick.jpg?v=1635806797110"
+        />
+        <img
+          id="wood-wall"
+          src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/TexturesCom_Wood_SidingOutdoor6_2x2_1K_albedo.png?v=1659393872427"
+        />
+        <img
+          id="wood-NRM"
+          src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/TexturesCom_Wood_SidingOutdoor6_2x2_1K_normal.png?v=1659393867783"
+        />
+        <img
+          id="stone-reg"
+          src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FScene_-_Root_baseColor.png?v=1636168655320"
+        />
+        <img
+          id="stone-NRM"
+          src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FScene_-_Root_normal.png?v=1636168640164"
+        />
+        <img
+          id="gray-carpet"
+          src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/TexturesCom_Carpet0021_1_seamless_S.jpg?v=1659385743941"
+        />
+        <img
+          id="thatch"
+          src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/TexturesCom_Thatched0046_1_seamless_S.jpg?v=1659389431890"
+        />
+      </a-assets>
+
+      <a-entity
+        id="rig"
+        thumbstick-object-control="movestick:#lhand;                                   
+                             rotatestick:none;
+                             moverepeattime:1;
+                             axes:XZ;
+                             posunit:0.1"
+      >
+        <a-camera id="camera" position="6 1.6 4" twoway-motion="speed: 25; threshold: -15" look-controls> </a-camera>
+        <a-entity id="lhand" hand-controls="hand: left"> </a-entity>
+        <a-entity id="rhand" hand-controls="hand: right"> </a-entity>
+      </a-entity>
+
+      
+
+      <!-- Left Wall -->
+      <a-box
+        position="0 1.21 0"
+        rotation=""
+        color="#FFF"
+        material="src: #stone-reg; repeat: 29 2; normal-map: #stone-NRM; normal-texture-repeat: 29 2; normal-scale: 1 -1; roughness: 0.6;"
+        geometry=""
+        scale="0.006 2.438 29.4"
+        shadow="cast: true"
+      ></a-box>
+      <!-- Front Champ Wall -->
+      <a-box
+        position="6 1.21 -14.7"
+        rotation="0 90 0"
+        color="#FFF"
+        material="src: #wood-wall; repeat: 6 2; normal-map: #wood-NRM; normal-texture-repeat: 6 2; normal-scale: 1 -1; roughness: 0.33;"
+        geometry=""
+        scale="0.006 2.438 12"
+      ></a-box>
+      <!-- Front Champ Triangle -->
+      <a-triangle
+        position="6 3.5 -14.7"
+        rotation="0 0 0"
+        scale="12.2 2.2 1"
+        material="color: orange; opacity: 0.2"
+      ></a-triangle>
+      <!-- Back Wall -->
+      <a-box
+        position="12 1.21 0"
+        rotation=""
+        color="#FFF"
+        material="src: #stone-reg; repeat: 29 2; normal-map: #stone-NRM; normal-texture-repeat: 29 2; normal-scale: 1 -1; roughness: 0.6;"
+        geometry=""
+        scale="0.006 2.438 29.4"
+        shadow="cast: true"
+      ></a-box>
+
+      <!-- Right Wall -->
+      <a-box
+        position="6 1.21 14.7"
+        rotation="0 90 0"
+        color="#FFF"
+        material="src: #stone-reg; repeat: 6 2; normal-map: #stone-NRM; normal-texture-repeat: 6 2; normal-scale: 1 -1; roughness: 0.6;"
+        geometry=""
+        scale="0.006 2.438 12"
+        shadow="cast: true"
+      ></a-box>
+      <!-- Carpet -->
+      <a-plane
+        position="6 .24 0"
+        rotation="-90 0 0"
+        width="12"
+        height="29.4"
+        material="src: #gray-carpet; repeat: 10 30;"
+        shadow="recieve: true"
+        roughness="0.8"
+      ></a-plane>
+      <!-- Left Ceiling -->
+      <a-plane
+        position="3 3.52 0"
+        rotation="70 90 90"
+        width="6.385"
+        height="29.4"
+        material="src: #thatch; repeat: 8 20;"
+        shadow="cast: true"
+        roughness="0.8"
+      ></a-plane>
+      <!-- Right Ceiling -->
+      <a-plane
+        position="9 3.52 0"
+        rotation="70 270 90"
+        width="6.385"
+        height="29.4"
+        material="src: #thatch; repeat: 8 20;"
+        shadow="cast: true"
+        roughness="0.8"
+      ></a-plane>
+      <!-- Football Model -->
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Ffootball.glb?v=1636127870094"
+        scale=".025 .025 .025"
+        position="5 1 -14.3"
+        rotation="0 0 90"
+        animation="property: rotation; to: 0 360 90; loop: true; dur: 1000;"
+        shadow="cast: true"
+      ></a-gltf-model>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Ffootball.glb?v=1636127870094"
+        scale=".025 .025 .025"
+        position="7 1 -14.3"
+        rotation="0 180 90"
+        animation="property: rotation; to: 0 -180 90; loop: true; dur: 1000;"
+        shadow="cast: true"
+      ></a-gltf-model>
+      <!-- Sunlight -->
+      <a-entity
+        id="spotT"
+        light="type: point; intensity: 1; distance: 50; decay: .3; color: #f5811b; castShadow: true;"
+        position="5.455 3.695 18.404"
+      ></a-entity>
+      <a-light type="ambient" color="#ffecb0" intensity="0.75"></a-light>
+
+      <a-sky color="#ECECEC"></a-sky>
+
+      <!-- Names, Nameplates, Frame, and Pictures go here -->
+      <a-text
+        value="'99-'02 \n Sandbox \n Years"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 13.265"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 13.265"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 13.265"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="02SB"
+        position="0.03 1.475 13.265"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOSB.jpg?v=1637625864963"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2003 \n B-Bills \n Jeff"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 11.305"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 11.305"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 11.305"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="03BB"
+        position="0.03 1.475 11.305"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCO-Y1BB.png?v=1638118137886"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2004 \n Gridiron Gurus \n SOB"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 9.345"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 9.345"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 9.345"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="03GG"
+        position="0.03 1.475 9.345"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2F04Gurus.png?v=1638118969621"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2005 \n Brown Rice \n Big Matt"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 7.385"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 7.385"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 7.385"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="04BR"
+        position="0.03 1.475 7.385"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fbrownrice.png?v=1638138556375"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2006 \n Matt's Big Cats \n Big Matt"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 5.425"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 5.425"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 5.425"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="06MBC"
+        position="0.03 1.475 5.425"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fmbigc.png?v=1638138552432"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2007 \n The Brady Bunch \n Jeff"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 3.465"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 3.465"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 3.465"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="07BB"
+        position="0.03 1.475 3.465"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fbradyb.png?v=1638138548229"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2008 \n Mo Jo Colston \n Big Matt"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 1.505"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 1.505"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 1.505"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="08MJC"
+        position="0.03 1.475 1.505"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fmojo.png?v=1638138544664"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2009 \n P.C.L. \n Ian"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -.455"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -.455"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -.455"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="09PCL"
+        position="0.03 1.475 -.455"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fpcl.png?v=1638138540495"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2010 \n All Day Jackin' \n Tony"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -2.415"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -2.415"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -2.415"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="10ADJ"
+        position="0.03 1.475 -2.415"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Falldayj.png?v=1638138537531"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2011 \n Gang Green \n Chris"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -4.375"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -4.375"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -4.375"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="11GG"
+        position="0.03 1.475 -4.375"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fgangg.png?v=1638138534707"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2012 \n Team Crawford \n Greg"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -6.335"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -6.335"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -6.335"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="12TC"
+        position="0.03 1.475 -6.335"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fteamc.png?v=1638138531716"
+      ></a-plane>
+
+      <!-- Another one -->
+      <a-text
+        value="2013 \n Team Crawford \n Greg"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -8.295"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -8.295"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -8.295"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="13TC"
+        position="0.03 1.475 -8.295"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fteamc.png?v=1638138531716"
+      ></a-plane>
+
+      <!-- Another one position Z changes by -1.96-->
+      <a-text
+        value="2014 \n Air Force Ones \n Jeff"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -10.255"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -10.255"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -10.255"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="14AF"
+        position="0.03 1.475 -10.255"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/njco-af1.png?v=1659669274517"
+      ></a-plane>
+
+      <!-- Another one position Z changes by -1.96-->
+      <a-text
+        value="2015 \n Tom Leon's Team \n Tom L"
+        align="center"
+        width="1.5"
+        position="0.02 0.6 -12.215"
+        rotation="0 90 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="0.02 0.6 -12.215"
+        rotation="0 90 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="0.02 1.5 -12.215"
+        rotation="0 90 0"
+      ></a-gltf-model>
+      <a-plane
+        id="15SSB"
+        position="0.03 1.475 -12.215"
+        rotation="0 90 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/njco-SSB.png?v=1659669440761"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2016 \n Teamy McTeamFace \n SOB"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -12.215"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -12.215"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -12.215"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="16TMT"
+        position="11.97 1.475 -12.215"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/tcmct.png?v=1659671010707"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2017 \n On Yo Couch \n Tony"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -10.255"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -10.255"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -10.255"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="17TMT"
+        position="11.97 1.475 -10.255"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/onyocouch.png?v=1659671636981"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2018 \n Kupp Check \n Tom Cohen"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -8.295"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -8.295"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -8.295"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="18TMT"
+        position="11.97 1.475 -8.295"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/kuppcheck.png?v=1659672093816"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2019 \n Kupp Check \n Tom Cohen"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -6.335"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -6.335"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -6.335"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="19TMT"
+        position="11.97 1.475 -6.335"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/kuppcheck.png?v=1659672093816"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2020 \n Team Crawford \n Greg"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -4.375"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -4.375"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -4.375"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="20TMT"
+        position="11.97 1.475 -4.375"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fteamc.png?v=1638138531716"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2021 \n Kupp Check \n Tom Cohen"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -2.415"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -2.415"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -2.415"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="21TMT"
+        position="11.97 1.475 -2.415"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/kuppcheck.png?v=1659672093816"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2022 \n Team Crawford \n Greg"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 -0.455"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 -0.455"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 -0.455"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="22TMT"
+        position="11.97 1.475 -0.455"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2Fteamc.png?v=1638138531716"
+      ></a-plane>
+
+      <!-- Right Wall - Another one position Z changes by 1.96-->
+      <a-text
+        value="2023 \n Sandy Hookers \n SOB"
+        align="center"
+        width="1.5"
+        position="11.98 0.6 1.505"
+        rotation="0 270 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="11.98 0.6 1.505"
+        rotation="0 270 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="11.98 1.5 1.505"
+        rotation="0 270 0"
+      ></a-gltf-model>
+      <a-plane
+        id="23TMT"
+        position="11.97 1.475 1.505"
+        rotation="0 270 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/Screenshot%202023-12-26%20at%2012.42.41%E2%80%AFPM.png?v=1703612584899"
+      ></a-plane>
+
+      <!-- Champion Slot -->
+      <a-text
+        value="2024 \n Finer Things \n Tony"
+        align="center"
+        width="1.5"
+        position="6 0.6 -14.67"
+        rotation="0 0 0"
+        color="#000"
+      ></a-text>
+      <a-plane
+        position="6 0.6 -14.67"
+        rotation="0 0 0"
+        width=".7"
+        height=".3"
+        color="#E8D653"
+      ></a-plane>
+      <a-gltf-model
+        src="https://cdn.glitch.me/0cf26e19-146a-4d90-b690-c9cb40b9f1a1%2FNJCOFrame.glb?v=1637618219766"
+        scale="1 1 1"
+        position="6 1.5 -14.67"
+        rotation="0 0 0"
+      ></a-gltf-model>
+      <a-plane
+        id="24TMT"
+        position="6 1.475 -14.65"
+        rotation="0 0 0"
+        width=".88"
+        height="1.415"
+        src="https://cdn.glitch.global/0cf26e19-146a-4d90-b690-c9cb40b9f1a1/Gemini_Generated_Image_h90btyh90btyh90b.jpeg?v=1735014250337"
+      ></a-plane>
+      <a-entity environment="preset: forest; dressingAmount: 500"></a-entity>
+    </a-scene>
+  </body>
+</html>
