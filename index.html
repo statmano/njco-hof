@@ -42,6 +42,14 @@
           id="thatch"
           src="https://file.garden/aHv0Hbj9PThoD4eE/thatchroof.jpg"
         />
+        <img
+          id="champ-floor"
+          src="https://file.garden/aHv0Hbj9PThoD4eE/floortile1_baseColor.png"
+        />
+        <img
+          id="champ-floor-NRM"
+          src="https://file.garden/aHv0Hbj9PThoD4eE/floortile1_normal.png"
+        />
       </a-assets>
 
       <a-entity
@@ -85,6 +93,15 @@
         scale="12.2 2.2 1"
         material="color: orange; opacity: 0.2"
       ></a-triangle>
+      <!-- Front Champ Floor -->
+      <a-box
+        position="6 2.21 -14.7"
+        rotation="0 0 0"
+        color="#FFF"
+        material="src: #champ-floor; repeat: 6 2; normal-map: #champ-floor-NRM; normal-texture-repeat: 6 2; normal-scale: 1 -1; roughness: 0.33;"
+        geometry=""
+        scale="0.006 2.438 12"
+      ></a-box>
       <!-- Back Wall -->
       <a-box
         position="12 1.21 0"
