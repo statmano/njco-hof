@@ -88,19 +88,48 @@
       ></a-box>
       <!-- Front Champ Triangle -->
       <a-triangle
-        position="6 3.5 -14.7"
+        position="6 3.5 -14.82"
         rotation="0 0 0"
         scale="12.2 2.2 1"
         material="color: orange; opacity: 0.2"
       ></a-triangle>
       <!-- Front Champ Floor -->
       <a-box
-        position="6 2.21 -14.7"
-        rotation="0 0 0"
+        position="6 0.25 -13.9"
+        rotation="0 90 90"
         color="#FFF"
         material="src: #champ-floor; repeat: 6 2; normal-map: #champ-floor-NRM; normal-texture-repeat: 6 2; normal-scale: 1 -1; roughness: 0.33;"
         geometry=""
-        scale="0.006 2.438 12"
+        scale=".08 1.58 12"
+      ></a-box>
+      <!-- Support Left -->
+      <a-box
+        position="5.25 3.3 -14.78"
+        rotation="45 90 90"
+        color="#401b0d"
+        
+        geometry=""
+        scale=".18 .18 2.4"
+      ></a-box>
+      <!-- Support Right -->
+      <a-box
+        position="6.8 3.3 -14.78"
+        rotation="45 270 90"
+        color="#401b0d"
+        
+        geometry=""
+        scale=".18 .18 2.4"
+      ></a-box>
+      <!-- Support Beam -->
+      <a-box
+        position="6 2.48 -14.78"
+        rotation="0 90 90"
+        color="#401b0d"
+        height="1"
+        width="1"
+        depth="5"
+        geometry=""
+        scale=".18 .18 2.4"
       ></a-box>
       <!-- Back Wall -->
       <a-box
@@ -138,7 +167,7 @@
         position="3 3.52 0"
         rotation="70 90 90"
         width="6.385"
-        height="29.4"
+        height="29.75"
         material="src: #thatch; repeat: 8 20;"
         shadow="cast: true"
         roughness="0.8"
@@ -148,7 +177,7 @@
         position="9 3.52 0"
         rotation="70 270 90"
         width="6.385"
-        height="29.4"
+        height="29.75"
         material="src: #thatch; repeat: 8 20;"
         shadow="cast: true"
         roughness="0.8"
