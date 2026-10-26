@@ -49,7 +49,11 @@ AFRAME.registerComponent("champion-mouse-interaction", {
     this.pointer = new THREE.Vector2();
     this.raycaster = new THREE.Raycaster();
     this.onPointerDown = this.onPointerDown.bind(this);
+    this.onTouchStart = this.onTouchStart.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onTouchCancel = this.onTouchCancel.bind(this);
     this.attachCanvas = this.attachCanvas.bind(this);
+    this.touch = null;
 
     if (this.el.hasLoaded) {
       this.attachCanvas();
@@ -61,6 +65,15 @@ AFRAME.registerComponent("champion-mouse-interaction", {
     this.canvas = this.el.canvas;
     if (this.canvas) {
       this.canvas.addEventListener("pointerdown", this.onPointerDown);
+      this.canvas.addEventListener("touchstart", this.onTouchStart, {
+        passive: true,
+      });
+      this.canvas.addEventListener("touchend", this.onTouchEnd, {
+        passive: true,
+      });
+      this.canvas.addEventListener("touchcancel", this.onTouchCancel, {
+        passive: true,
+      });
     }
   },
   onPointerDown: function (event) {
@@ -68,9 +81,58 @@ AFRAME.registerComponent("champion-mouse-interaction", {
       return;
     }
 
+    this.activateTarget(event.clientX, event.clientY);
+  },
+  onTouchStart: function (event) {
+    if (event.touches.length !== 1) {
+      this.touch = null;
+      this.setMovement(false);
+      return;
+    }
+
+    var touch = event.touches[0];
+    var overButton = this.isTargetAt(touch.clientX, touch.clientY);
+    this.touch = {
+      x: touch.clientX,
+      y: touch.clientY,
+      startedAt: Date.now(),
+      overButton: overButton,
+    };
+    if (!overButton) this.setMovement(true);
+  },
+  onTouchEnd: function (event) {
+    if (!this.touch) return;
+
+    this.setMovement(false);
+    var touch = event.changedTouches[0];
+    var duration = Date.now() - this.touch.startedAt;
+    var distance = Math.hypot(
+      touch.clientX - this.touch.x,
+      touch.clientY - this.touch.y
+    );
+    if (this.touch.overButton && duration < 600 && distance < 24) {
+      this.activateTarget(touch.clientX, touch.clientY);
+    }
+    this.touch = null;
+  },
+  onTouchCancel: function () {
+    this.setMovement(false);
+    this.touch = null;
+  },
+  isTargetAt: function (clientX, clientY) {
+    return this.getTargetAt(clientX, clientY) !== null;
+  },
+  activateTarget: function (clientX, clientY) {
+    var target = this.getTargetAt(clientX, clientY);
+    if (target) target.emit("click");
+  },
+  getTargetAt: function (clientX, clientY) {
+    if (!this.el.camera || !this.canvas) return null;
+
     var bounds = this.canvas.getBoundingClientRect();
-    this.pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-    this.pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+    this.pointer.x = ((clientX - bounds.left) / bounds.width) * 2 - 1;
+    this.pointer.y = -((clientY - bounds.top) / bounds.height) * 2 + 1;
+    this.el.object3D.updateMatrixWorld(true);
     this.raycaster.setFromCamera(this.pointer, this.el.camera);
 
     var target = document.querySelector(".induction-target");
@@ -78,13 +140,37 @@ AFRAME.registerComponent("champion-mouse-interaction", {
       target &&
       this.raycaster.intersectObject(target.object3D, true).length > 0
     ) {
-      target.emit("click");
+      return target;
+    }
+    return null;
+  },
+  setMovement: function (enabled) {
+    var camera = this.el.camera && this.el.camera.el;
+    var wasdControls = camera && camera.components["wasd-controls"];
+    if (!wasdControls) return;
+
+    if (enabled) {
+      var lookingDown =
+        camera.object3D.rotation.x < THREE.MathUtils.degToRad(-15);
+      wasdControls.keys.ArrowUp = !lookingDown;
+      wasdControls.keys.ArrowDown = lookingDown;
+    } else {
+      wasdControls.keys.ArrowUp = false;
+      wasdControls.keys.ArrowDown = false;
+    }
+  },
+  tick: function () {
+    if (this.touch && !this.touch.overButton) {
+      this.setMovement(true);
     }
   },
   remove: function () {
     this.el.removeEventListener("loaded", this.attachCanvas);
     if (this.canvas) {
       this.canvas.removeEventListener("pointerdown", this.onPointerDown);
+      this.canvas.removeEventListener("touchstart", this.onTouchStart);
+      this.canvas.removeEventListener("touchend", this.onTouchEnd);
+      this.canvas.removeEventListener("touchcancel", this.onTouchCancel);
     }
   },
 });
