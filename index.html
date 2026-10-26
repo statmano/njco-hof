@@ -60,9 +60,21 @@
                              axes:XZ;
                              posunit:0.1"
       >
-        <a-camera id="camera" position="6 1.6 4" twoway-motion="speed: 25; threshold: -15" look-controls> </a-camera>
+        <a-camera
+          id="camera"
+          position="6 1.6 4"
+          twoway-motion="speed: 25; threshold: -15"
+          look-controls
+          cursor="rayOrigin: mouse"
+          raycaster="objects: .induction-target"
+        ></a-camera>
         <a-entity id="lhand" hand-controls="hand: left"> </a-entity>
-        <a-entity id="rhand" hand-controls="hand: right"> </a-entity>
+        <a-entity
+          id="rhand"
+          hand-controls="hand: right"
+          raycaster="objects: .induction-target"
+          champion-induction-controller
+        ></a-entity>
       </a-entity>
 
       
@@ -952,7 +964,80 @@
         height="1.415"
         src="https://file.garden/aHv0Hbj9PThoD4eE/peppony.png"
       ></a-plane>
+
+      <a-entity
+        id="champion-spotlight"
+        light="type: spot; color: #fff2bd; intensity: 0; angle: 32; penumbra: 0.35; distance: 8; decay: 1"
+        position="6 3.25 -12.5"
+        rotation="-35 0 0"
+      ></a-entity>
+      <a-entity
+        id="induction-curtain"
+        position="6 1.475 -14.62"
+      >
+        <a-plane width=".88" height="1.415" color="#681b2a"></a-plane>
+        <a-text
+          value="Click below to reveal&#10;this year's Champion"
+          align="center"
+          width=".8"
+          position="0 0 0.01"
+          color="#f5d66f"
+        ></a-text>
+      </a-entity>
+      <a-entity
+        id="induction-button"
+        class="induction-button"
+        champion-reveal
+        position="6 0.6 -14.62"
+      >
+        <a-box
+          width="1.65"
+          height=".52"
+          depth=".14"
+          color="#f5d66f"
+          material="emissive: #f5d66f; emissiveIntensity: 0.45; metalness: 0.2; roughness: 0.3"
+          animation="property: scale; from: 1 1 1; to: 1.04 1.08 1; dir: alternate; loop: true; dur: 1200; easing: easeInOutSine"
+        ></a-box>
+        <a-box
+          class="induction-target"
+          width="1.55"
+          height=".42"
+          depth=".12"
+          color="#7a1728"
+          material="metalness: 0.25; roughness: 0.4"
+          position="0 0 0.025"
+        ></a-box>
+        <a-text
+          value="Reveal!"
+          align="center"
+          width="1.5"
+          position="0 0 0.1"
+          scale="1.5 1.5 1.5"
+          color="#ffffff"
+        ></a-text>
+      </a-entity>
       <a-entity environment="preset: forest; dressingAmount: 500"></a-entity>
     </a-scene>
+    <div
+      id="champion-audio-player"
+      style="display: none; position: fixed; right: 16px; bottom: 16px; z-index: 1000; background: #681b2a; padding: 8px; color: white; font: 14px sans-serif;"
+    >
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px"
+      >
+        <span>Pepperoni Pony induction audio</span>
+        <button id="champion-audio-stop" type="button">Stop audio</button>
+      </div>
+      <iframe
+        id="champion-audio-iframe"
+        title="Pepperoni Pony induction audio"
+        width="320"
+        height="200"
+        src="about:blank"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
   </body>
 </html>

@@ -27,6 +27,148 @@ AFRAME.registerComponent("thumbstick-logging", {
   },
 });
 
+AFRAME.registerComponent("champion-induction-controller", {
+  init: function () {
+    this.onTriggerDown = function () {
+      var raycaster = this.components.raycaster;
+      var target = raycaster && raycaster.intersectedEls[0];
+      if (target) {
+        target.emit("click");
+      }
+    };
+
+    this.el.addEventListener("triggerdown", this.onTriggerDown);
+  },
+  remove: function () {
+    this.el.removeEventListener("triggerdown", this.onTriggerDown);
+  },
+});
+
+AFRAME.registerComponent("champion-reveal", {
+  init: function () {
+    this.revealed = false;
+    this.onClick = this.reveal.bind(this);
+    this.onStopAudio = this.stopAudio.bind(this);
+    this.el.addEventListener("click", this.onClick);
+    document
+      .querySelector("#champion-audio-stop")
+      .addEventListener("click", this.onStopAudio);
+  },
+  reveal: function () {
+    if (this.revealed) return;
+    this.revealed = true;
+
+    var curtain = document.querySelector("#induction-curtain");
+    var spotlight = document.querySelector("#champion-spotlight");
+    var button = this.el.querySelector(".induction-target");
+    var player = document.querySelector("#champion-audio-player");
+    var audioFrame = document.querySelector("#champion-audio-iframe");
+
+    curtain.setAttribute("animation__roll", {
+      property: "scale",
+      from: "1 1 1",
+      to: "1 0.001 1",
+      dur: 1800,
+      easing: "easeInOutCubic",
+    });
+    curtain.setAttribute("animation__lift", {
+      property: "position",
+      from: "6 1.475 -14.62",
+      to: "6 2.182 -14.62",
+      dur: 1800,
+      easing: "easeInOutCubic",
+    });
+    spotlight.setAttribute("light", "intensity", 2.5);
+
+    button.classList.remove("induction-target");
+    this.el.setAttribute("animation__vanish", {
+      property: "scale",
+      from: "1 1 1",
+      to: "0.001 0.001 0.001",
+      dur: 700,
+      easing: "easeInBack",
+    });
+    this.el.setAttribute("animation__spin", {
+      property: "rotation",
+      from: "0 0 0",
+      to: "0 360 0",
+      dur: 700,
+      easing: "easeInCubic",
+    });
+    this.el.setAttribute("animation__drop", {
+      property: "position",
+      from: "6 0.6 -14.62",
+      to: "6 0.25 -14.62",
+      dur: 700,
+      easing: "easeInCubic",
+    });
+    this.hideTimeout = window.setTimeout(function () {
+      this.el.setAttribute("visible", false);
+    }.bind(this), 750);
+    audioFrame.src =
+      "https://www.youtube-nocookie.com/embed/B_HSa1dEL9s?autoplay=1&controls=1&playsinline=1";
+    player.style.display = "block";
+    this.launchConfetti();
+  },
+  stopAudio: function () {
+    var audioFrame = document.querySelector("#champion-audio-iframe");
+    var player = document.querySelector("#champion-audio-player");
+
+    audioFrame.src = "about:blank";
+    player.style.display = "none";
+  },
+  launchConfetti: function () {
+    var scene = this.el.sceneEl;
+    var colors = ["#f5d66f", "#d9253f", "#ffffff", "#2b8f72", "#4b73c2"];
+
+    for (var i = 0; i < 60; i++) {
+      var piece = document.createElement("a-box");
+      var startX = 6 + (Math.random() - 0.5) * 1.2;
+      var startY = 2.6 + Math.random() * 0.7;
+      var startZ = -13.9 + (Math.random() - 0.5) * 0.4;
+      var endX = startX + (Math.random() - 0.5) * 6;
+      var endY = 0.25 + Math.random() * 3.2;
+      var endZ = startZ + (Math.random() - 0.5) * 4;
+      var duration = 1700 + Math.random() * 1300;
+
+      piece.setAttribute("width", 0.06 + Math.random() * 0.08);
+      piece.setAttribute("height", 0.06 + Math.random() * 0.08);
+      piece.setAttribute("depth", 0.025);
+      piece.setAttribute("color", colors[Math.floor(Math.random() * colors.length)]);
+      piece.setAttribute("material", "roughness: 0.6");
+      piece.setAttribute("position", startX + " " + startY + " " + startZ);
+      piece.setAttribute("rotation", "0 0 0");
+      piece.setAttribute("animation__burst", {
+        property: "position",
+        to: endX + " " + endY + " " + endZ,
+        dur: duration,
+        easing: "easeOutCubic",
+      });
+      piece.setAttribute("animation__spin", {
+        property: "rotation",
+        to:
+          Math.random() * 720 +
+          " " +
+          Math.random() * 720 +
+          " " +
+          Math.random() * 720,
+        dur: duration,
+      });
+      scene.appendChild(piece);
+      window.setTimeout(function (confetti) {
+        confetti.remove();
+      }, duration + 100, piece);
+    }
+  },
+  remove: function () {
+    this.el.removeEventListener("click", this.onClick);
+    document
+      .querySelector("#champion-audio-stop")
+      .removeEventListener("click", this.onStopAudio);
+    window.clearTimeout(this.hideTimeout);
+  },
+});
+
 AFRAME.registerComponent("oculus-thumbstick-controls", {
   schema: {
     acceleration: { default: 45 },
