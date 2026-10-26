@@ -44,6 +44,51 @@ AFRAME.registerComponent("champion-induction-controller", {
   },
 });
 
+AFRAME.registerComponent("champion-mouse-interaction", {
+  init: function () {
+    this.pointer = new THREE.Vector2();
+    this.raycaster = new THREE.Raycaster();
+    this.onPointerDown = this.onPointerDown.bind(this);
+    this.attachCanvas = this.attachCanvas.bind(this);
+
+    if (this.el.hasLoaded) {
+      this.attachCanvas();
+    } else {
+      this.el.addEventListener("loaded", this.attachCanvas);
+    }
+  },
+  attachCanvas: function () {
+    this.canvas = this.el.canvas;
+    if (this.canvas) {
+      this.canvas.addEventListener("pointerdown", this.onPointerDown);
+    }
+  },
+  onPointerDown: function (event) {
+    if (event.pointerType !== "mouse" || event.button !== 0 || !this.el.camera) {
+      return;
+    }
+
+    var bounds = this.canvas.getBoundingClientRect();
+    this.pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+    this.pointer.y = -((event.clientY - bounds.top) / bounds.height) * 2 + 1;
+    this.raycaster.setFromCamera(this.pointer, this.el.camera);
+
+    var target = document.querySelector(".induction-target");
+    if (
+      target &&
+      this.raycaster.intersectObject(target.object3D, true).length > 0
+    ) {
+      target.emit("click");
+    }
+  },
+  remove: function () {
+    this.el.removeEventListener("loaded", this.attachCanvas);
+    if (this.canvas) {
+      this.canvas.removeEventListener("pointerdown", this.onPointerDown);
+    }
+  },
+});
+
 AFRAME.registerComponent("champion-reveal", {
   init: function () {
     this.revealed = false;
