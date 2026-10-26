@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <a-scene log="Hello Scene!">
+    <a-scene log="Hello Scene!" champion-mouse-interaction>
       <!-- ASM Secton -->
       <a-assets>
         <img
@@ -65,8 +65,6 @@
           position="6 1.6 4"
           twoway-motion="speed: 25; threshold: -15"
           look-controls
-          cursor="rayOrigin: mouse"
-          raycaster="objects: .induction-target"
         ></a-camera>
         <a-entity id="lhand" hand-controls="hand: left"> </a-entity>
         <a-entity
