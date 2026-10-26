@@ -1,11 +1,19 @@
-# A-Frame Project
+# NJCO Hall of Fame
 
-**[Subscribe to the A-Frame newsletter!](https://aframe.io/subscribe/)**
+An A-Frame virtual reality experience celebrating the NJCO community.
 
-**[Sponsor us to help support A-Frame development and its community](https://github.com/sponsors/dmarcos)**
+## Project structure
 
-Built with [A-Frame](https://aframe.io), a web framework for building virtual reality experiences.
+- `index.html` - scene markup and experience layout
+- `js/` - custom JavaScript components and controls
+- `assets/images/` - image assets, with `glitch-assets/` for imported Glitch images
+- `assets/models/` - 3D model files
+- `LICENSE.md` - project license
 
-Make WebVR with HTML and Entity-Component. Works on Vive, Rift, Quest, desktop, mobile platforms.
+## Run locally
 
-Click and drag on desktop. Open it on a smartphone and use the device motion sensors. Or [plug in a VR headset](https://aframe.io/docs/0.8.0/introduction/vr-headsets-and-webvr-browsers.html)!
+Serve the repository root with a local web server and open `index.html` through
+that server. A local server is needed for browser asset loading and WebXR.
+
+The scene uses A-Frame and several assets hosted by third parties, so an
+internet connection is required.
