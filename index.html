@@ -6,8 +6,6 @@
     <!-- import the webpage's javascript file -->
     <script src="./js/script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/gh/diarmidmackenzie/6dof-object-control@v0.5-alpha/src/thumbstick-object-control.min.js"></script>
-    <script src="https://rawgit.com/Ctrl-Alt-Zen/aframe-mobile-controls/master/components/twoway-motion/twoway-motion.js"></script>
-
   </head>
 
   <body>
@@ -63,7 +61,7 @@
         <a-camera
           id="camera"
           position="6 1.6 4"
-          twoway-motion="speed: 25; threshold: -15"
+          wasd-controls="acceleration: 25"
           look-controls
         ></a-camera>
         <a-entity id="lhand" hand-controls="hand: left"> </a-entity>
