@@ -152,8 +152,8 @@ AFRAME.registerComponent("champion-mouse-interaction", {
     if (enabled) {
       var lookingDown =
         camera.object3D.rotation.x < THREE.MathUtils.degToRad(-15);
-      wasdControls.keys.ArrowUp = !lookingDown;
-      wasdControls.keys.ArrowDown = lookingDown;
+      wasdControls.keys.ArrowDown = !lookingDown;
+      wasdControls.keys.ArrowUp = lookingDown;
     } else {
       wasdControls.keys.ArrowUp = false;
       wasdControls.keys.ArrowDown = false;
